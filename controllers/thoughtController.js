@@ -1,6 +1,7 @@
 const { Thought, User } = require('../models');
 
 module.exports = {
+//  const thoughtController = {
 
     async getAll(req, res) {
         try {
@@ -30,30 +31,25 @@ module.exports = {
 
     async create(req, res) {
         try {
-            const {thoughtText, username} = req.body;  
-            const newThought = new Thought({
-                thoughtText,
-                username,
-            });
+          const dbThought = await Thought.create(req.body);
 
-            
-            const savedThought = await newThought.save();
-            const user = await User.findOneAndUpdate(
-                {username },
-                { $push: { thoughts: savedThought._id} },
-                { new: true}
-            );
+          const user = await User.findOneAndUpdate(
+            { _id: req.body.userId },
+            { $push: { thoughts: dbThought._id } },
+            { new: true }
+          );
 
-            if(!user) {
-                return res.status(400).json({ message: 'No user with that ID!'})
-            }
-            res.status(200).json(savedThought);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json(err);
-    }
-    },
+          if (!user) {
+            return res.status(400).json({ message: 'No user with that ID!' });
+          }
 
+          res.status(201).json(dbThought); // 201 Created status code
+        } catch (err) {
+          console.error(err);
+          res.status(500).json(err);
+        }
+      },
+      
     async update(req, res) {
         try {
             const thought = await Thought.findOneAndUpdate(
@@ -128,4 +124,4 @@ module.exports = {
     }
   },
 
-}
+};
