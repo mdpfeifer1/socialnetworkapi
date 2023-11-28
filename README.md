@@ -20,6 +20,7 @@
 https://drive.google.com/file/d/1DGSaW3YlTBjM-jYJ3dJtpYqoA5fU3QTt/view
 
 ## Credits
+I heavily relied on 18.23 as well as debugging with Jakob Pfeifer
 
 If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
 
