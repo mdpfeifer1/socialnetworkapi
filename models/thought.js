@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const { Schema, model } = require('mongoose');
 const reactionSchema = require('./Reaction');
 const dayJS = require('dayjs');
@@ -18,7 +19,8 @@ const thoughtSchema = new Schema({
   createdAt: {
     type: Date, 
     default: Date.now,
-    get: formatTime
+    // get: formatTime
+    get: (date) => new Date(date).toLocaleString(),
   },
   username: {
     type: String,
@@ -28,7 +30,7 @@ const thoughtSchema = new Schema({
 },
 {
   toJSON: {
-    virtuals: true,
+    getters: true,
   },
   id: false, 
 }
